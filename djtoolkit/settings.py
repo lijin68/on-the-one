@@ -48,6 +48,7 @@ class Settings:
     playlist_template: str = "Local: {folder}"  # {genre} still works (older settings)
     match_threshold: float = 0.8
     callback_port: int = 8888
+    has_answered_survey: bool = False
     ignore_genres: str = ""  # comma-separated, case-insensitive
     request_interval_ms: int = 334
     search_limit: int = 150  # fresh Spotify lookups per run; 0 = unlimited

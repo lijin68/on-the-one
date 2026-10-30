@@ -128,6 +128,18 @@ class MainWindow(QMainWindow):
         self._restore_state()
         root.setFocus()  # no focus ring on launch; Tab reveals it
 
+        self._restore_state()
+        root.setFocus()  # no focus ring on launch; Tab reveals it
+
+        # Show the survey once on the first launch (skip during tests)
+        import os
+
+        if not self.settings.has_answered_survey and "PYTEST_CURRENT_TEST" not in os.environ:
+            from .dialogs import SurveyDialog
+
+            self.survey_dialog = SurveyDialog(self.settings, self)
+            self.survey_dialog.exec()
+
     # --------------------------------------------------- remembered state
     def _restore_state(self) -> None:
         """Open where you left off: same window size and place, same page."""

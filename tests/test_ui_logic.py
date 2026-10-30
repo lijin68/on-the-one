@@ -356,3 +356,22 @@ def test_a_disabled_menu_entry_looks_disabled(app):
         loud, quiet = ink(img, menu.actionGeometry(on), bg), ink(img, menu.actionGeometry(off), bg)
         assert loud > quiet > 0  # the disabled entry is quieter than the others, and still legible
     theme.apply(app, "dark", theme.DEFAULT_ACCENT)
+
+
+def test_survey_dialog_saves_state(app, tmp_path, monkeypatch):
+    from djtoolkit.settings import Settings
+    from djtoolkit.ui.dialogs import SurveyDialog
+
+    # Mock the settings path to use a temp file
+    monkeypatch.setattr(Settings, "path", classmethod(lambda cls: tmp_path / "settings.json"))
+    settings = Settings()
+
+    dialog = SurveyDialog(settings)
+    assert settings.has_answered_survey is False
+
+    # Simulate clicking the save button
+    dialog._save_and_close()
+
+    assert settings.has_answered_survey is True
+    # Verify it saved to disk
+    assert Settings.load().has_answered_survey is True
