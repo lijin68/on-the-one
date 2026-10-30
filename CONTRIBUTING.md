@@ -16,6 +16,7 @@ Thanks for helping. DJ Toolkit is small, so a good change is small too.
   written to be challenged. "I'd do this differently, because…" is exactly what we want.
 - **Fix or build something.** Start with an issue labelled `good first issue` or `help wanted`, or the
   [roadmap](docs/roadmap.md).
+- **Introduce yourself.** Tell us who you are (a DJ, a developer, a designer, a writer), what you DJ with, and how you found the project in our [Introduce yourself category](https://github.com/tomgreef/dj-toolkit/discussions/categories/introduce-yourself). It's optional and public, so please don't share anything private.
 
 ## From issue to merged pull request
 
