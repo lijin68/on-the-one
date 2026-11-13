@@ -91,6 +91,7 @@ class TutorialsTab(QWidget):
         self.posts.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.posts.setMargin(2)
         self.scroll = QScrollArea()
+        self.scroll.setObjectName("posts")
         self.scroll.setWidgetResizable(True)
         self.scroll.setAccessibleName("Posts area")
         self.scroll.setFrameShape(QScrollArea.Shape.NoFrame)

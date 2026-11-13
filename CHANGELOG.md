@@ -7,7 +7,8 @@ and versions follow [Semantic Versioning](https://semver.org/). Each release's s
 
 ### Fixed
 
-- On the Tutorials page, a screen reader now says "Posts area" for the posts under a tutorial.
+- On the Tutorials page, a screen reader now says "Posts area" for the posts under a tutorial, and a ring shows when
+  Tab has reached them, in Booth and Daylight.
 
 ## [0.1.2] - 2026-10-31
 
