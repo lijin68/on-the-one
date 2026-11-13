@@ -451,8 +451,10 @@ def test_tutorials_tab_a11y(app):
     assert t.list.accessibleName() == "Tutorials"
     assert t.kind.accessibleName() == "Type of post"
     assert t.text.accessibleName() == "Your post"
+    assert t.scroll.accessibleName() == "Posts area"  # without it, a screen reader has nothing to say here
 
-    stops = _tab_stops(t, t.guide_btn)
-    assert t.list in stops
-    assert t.kind in stops
-    assert t.text in stops
+    stops = _tab_stops(t, t.list)  # the Tutorials page starts at its list of tutorials
+    assert t.list in stops and t.scroll in stops and t.kind in stops and t.text in stops
+    # Tab goes from the list to the posts (that is how the keyboard scrolls them), then to the post form
+    assert stops.index(t.scroll) == stops.index(t.list) + 1
+    assert stops.index(t.kind) == stops.index(t.scroll) + 1 and stops.index(t.text) == stops.index(t.kind) + 1

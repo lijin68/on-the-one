@@ -5,6 +5,10 @@ and versions follow [Semantic Versioning](https://semver.org/). Each release's s
 
 ## [Unreleased]
 
+### Fixed
+
+- On the Tutorials page, a screen reader now says "Posts area" for the posts under a tutorial.
+
 ## [0.1.2] - 2026-10-31
 
 ### Added
