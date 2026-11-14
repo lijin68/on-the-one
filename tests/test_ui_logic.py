@@ -451,8 +451,35 @@ def test_tutorials_tab_a11y(app):
     assert t.list.accessibleName() == "Tutorials"
     assert t.kind.accessibleName() == "Type of post"
     assert t.text.accessibleName() == "Your post"
+    assert t.scroll.accessibleName() == "Posts area"  # without it, a screen reader has nothing to say here
 
-    stops = _tab_stops(t, t.guide_btn)
-    assert t.list in stops
-    assert t.kind in stops
-    assert t.text in stops
+    stops = _tab_stops(t, t.list)  # the Tutorials page starts at its list of tutorials
+    assert t.list in stops and t.scroll in stops and t.kind in stops and t.text in stops
+    # Tab goes from the list to the posts (that is how the keyboard scrolls them), then to the post form
+    assert stops.index(t.scroll) == stops.index(t.list) + 1
+    assert stops.index(t.kind) == stops.index(t.scroll) + 1 and stops.index(t.text) == stops.index(t.kind) + 1
+
+
+def test_the_posts_area_shows_where_you_are_in_both_themes(app):
+    """Tab reaches the posts so the keyboard can scroll them: a ring has to say so, in Booth and Daylight."""
+    from PySide6.QtCore import Qt
+    from PySide6.QtGui import QColor
+
+    from djtoolkit.settings import Settings
+    from djtoolkit.ui.tutorials_tab import TutorialsTab
+
+    for mode in ("dark", "light"):
+        theme.apply(app, mode)
+        t = TutorialsTab(settings=Settings())
+        t.resize(900, 700)
+        t.show()
+        edge = (1, t.scroll.height() // 2)  # inside the ring's 2 px, halfway down the left side
+        t.list.setFocus(Qt.FocusReason.TabFocusReason)
+        app.processEvents()
+        assert t.scroll.grab().toImage().pixelColor(*edge) != QColor(theme.P.link), mode  # no ring while elsewhere
+        t.scroll.setFocus(Qt.FocusReason.TabFocusReason)
+        app.processEvents()
+        assert t.scroll.hasFocus()
+        assert t.scroll.grab().toImage().pixelColor(*edge) == QColor(theme.P.link), mode
+        t.close()
+    theme.apply(app, "dark", theme.DEFAULT_ACCENT)
